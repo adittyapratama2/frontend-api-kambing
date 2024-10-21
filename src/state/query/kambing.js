@@ -6,7 +6,11 @@ export const kambingApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `/goats`,
       }),
-      providesTags: [{ type: "Kambing", id: "LIST" }],
+      providesTags: [
+        { type: "Kambing", id: "LIST" },
+        { type: "IndukBetina", id: "LIST" },
+        { type: "IndukPejantan", id: "LIST" },
+      ],
     }),
     getKambingById: builder.query({
       query: ({ id }) => ({

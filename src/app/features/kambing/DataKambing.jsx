@@ -5,13 +5,96 @@ import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { LuArrowUpDown } from "react-icons/lu";
 import { IoFilterSharp } from "react-icons/io5";
 import { IoIosMore } from "react-icons/io";
+import { useState } from "react";
 
 const DataKambing = () => {
   const { data: kambings, isLoading, error } = useGetKambingQuery();
   const navigate = useNavigate();
+  const [filterType, setFilterType] = useState("kambing"); // Default filter
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown open state
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data</div>;
+
+  // Filter kambings based on the selected type
+  const filteredKambings = (kambings.data[filterType] || []).map((kambing) => {
+    // Determine gender icon based on the filter type
+    let genderIcon;
+    let detailKambing;
+    if (filterType === "induk_betina") {
+      genderIcon = (
+        <div className="bg-pink rounded-full flex items-center justify-center w-10 h-10">
+          <FaVenus className="text-white w-6 h-6" />
+        </div>
+      );
+      detailKambing = (
+        <button className="text-gray-400 hover:text-gray-600">
+          <IoIosMore />
+        </button>
+      );
+    } else if (filterType === "induk_pejantan") {
+      genderIcon = (
+        <div className="bg-secondary rounded-full flex items-center justify-center w-10 h-10">
+          <FaMars className="text-primary w-6 h-6" />
+        </div>
+      );
+      detailKambing = (
+        <button className="text-gray-400 hover:text-gray-600">
+          <IoIosMore />
+        </button>
+      );
+    } else if (filterType === "kambing") {
+      // Assuming first_kambing has its own structure, handle accordingly
+      genderIcon = (
+        <div className="bg-gray-300 rounded-full flex items-center justify-center w-10 h-10">
+          {kambing.jenis_kelamin === "jantan" ? (
+            <div className="bg-secondary rounded-full flex items-center justify-center w-10 h-10">
+              <FaMars className="text-primary w-6 h-6" />
+            </div>
+          ) : (
+            <div className="bg-pink rounded-full flex items-center justify-center w-10 h-10">
+              <FaVenus className="text-pink w-6 h-6" />
+            </div>
+          )}
+        </div>
+      );
+      detailKambing = (
+        <Link to={`/dashboard/kambing/${kambing.id}`}>
+          <button className="text-gray-400 hover:text-gray-600">
+            <IoIosMore />
+          </button>
+        </Link>
+      );
+    }
+
+    return (
+      <div
+        key={kambing.id}
+        className="flex items-center justify-between bg-white p-8 rounded-lg shadow"
+      >
+        <div className="flex items-center">
+          {/* Gender Icon */}
+          <div className="mr-4">{genderIcon}</div>
+
+          {/* Kambing Info */}
+          <div>
+            <h2 className="text-lg font-semibold text-textPrimary">
+              {kambing.noTag}
+            </h2>
+            <h3 className="text-md font-semibold text-textPrimary">
+              {kambing.nama_kambing}
+            </h3>
+            <p className="text-xs mt-1 p-1 bg-darkGrey rounded-full inline-block">
+              {kambing.ras}
+            </p>
+          </div>
+        </div>
+
+        {/* More Options */}
+        {detailKambing}
+      </div>
+    );
+  });
 
   return (
     <div className="min-h-screen p-2 bg-white">
@@ -25,7 +108,6 @@ const DataKambing = () => {
             <ArrowLeftIcon className="w-6 h-6" />
           </button>
           <h1 className="p-2 font-bold text-textPrimary mx-auto">Kambing</h1>
-          {/* Added mx-auto */}
           <Link to={"/dashboard/kambing/buat-baru"}>
             <button className="inline-flex items-center text-primary">
               Tambah
@@ -48,59 +130,61 @@ const DataKambing = () => {
           <LuArrowUpDown className="h-4 w-4 text-gray mr-1" />
           Urutkan
         </span>
-        <span className="border-none bg-grey rounded-full shadow-sm p-2 text-sm flex items-center">
-          <IoFilterSharp className="h-4 w-4 text-gray mr-1" />
-          Filter
-        </span>
+        <div className="relative">
+          <button
+            onClick={() => setDropdownOpen((prev) => !prev)}
+            className="border-none bg-grey rounded-full shadow-sm p-2 text-sm flex items-center"
+          >
+            <IoFilterSharp className="h-4 w-4 text-gray mr-1" />
+            Filter
+          </button>
+          {/* Dropdown Menu */}
+          {dropdownOpen && (
+            <div className="absolute right-0 bg-white shadow-lg rounded-lg mt-2 z-20">
+              <div
+                onClick={() => {
+                  setFilterType("induk_betina");
+                  setDropdownOpen(false);
+                }}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+              >
+                Induk Betina
+              </div>
+              <div
+                onClick={() => {
+                  setFilterType("induk_pejantan");
+                  setDropdownOpen(false);
+                }}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+              >
+                Induk Pejantan
+              </div>
+              <div
+                onClick={() => {
+                  setFilterType("kambing");
+                  setDropdownOpen(false);
+                }}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+              >
+                Kambing
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
       {/* List of Kambing */}
       <div className="space-y-4 mt-4">
-        {kambings.length > 0 ? (
-          kambings.map((kambing, index) => (
-            <div
-              key={kambing.id}
-              className="flex items-center justify-between bg-white p-8 rounded-lg shadow"
-            >
-              <div className="flex items-center">
-                {/* Gender Icon */}
-                <div className="mr-4">
-                  {kambing.kelamin === "jantan" ? (
-                    <div className="bg-secondary rounded-full flex items-center justify-center w-10 h-10">
-                      <FaMars className="text-primary w-6 h-6" />
-                    </div>
-                  ) : (
-                    <div className="bg-pink rounded-full flex items-center justify-center w-10 h-10">
-                      <FaVenus className="text-pink w-6 h-6" />
-                    </div>
-                  )}
-                </div>
-
-                {/* Kambing Info */}
-                <div>
-                  <h2 className="text-lg font-semibold text-textPrimary">
-                    {kambing.noTag}
-                  </h2>
-                  <h3 className="text-md font-semibold text-textPrimary">
-                    {kambing.nama_kambing}
-                  </h3>
-                  <p className="text-xs mt-1 p-1 bg-darkGrey rounded-full">
-                    Group Kambing
-                  </p>
-                </div>
-              </div>
-
-              {/* More Options */}
-              <Link to={`/dashboard/kambing/${kambing.id}`}>
-                <button className="text-gray-400 hover:text-gray-600">
-                  <IoIosMore />
-                </button>
-              </Link>
-            </div>
-          ))
+        {filteredKambings.length > 0 ? (
+          filteredKambings
         ) : (
           <div className="text-center py-8">
             <h3 className="text-lg font-semibold text-textPrimary">
-              Belum ada kambing.
+              {filterType === "induk_betina"
+                ? "Belum ada kambing Induk Betina."
+                : filterType === "induk_pejantan"
+                ? "Belum ada kambing Induk Jantan."
+                : "Belum ada kambing."}
             </h3>
             <p className="text-sm">
               Disini anda akan melihat daftar kambing yang anda tambahkan.

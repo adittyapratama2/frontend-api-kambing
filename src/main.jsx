@@ -5,7 +5,6 @@ import "./index.css";
 import AppLayout from "./app/layouts/AppLayout";
 import Dashboard from "./app/features/admin/Dashboard";
 import QRScanner from "./app/components/QrScanner";
-import InputDataKambing from "./app/features/kambing/InputData";
 import DataKambing from "./app/features/kambing/DataKambing";
 import BuatKambingBaru from "./app/features/kambing/BuatBaru";
 import LaporanKambing from "./app/features/laporan";
@@ -23,6 +22,10 @@ import EditIndukan from "./app/features/indukan/EditIndukan";
 import SplashScreen from "./app/components/SplashScreen";
 import DataKandang from "./app/features/kandang";
 import BuatKandang from "./app/features/kandang/BuatKandang";
+import DataPerkawinan from "./app/features/perkawinan";
+import TambahKawin from "./app/features/perkawinan/TambahKawin";
+import Kegiatan from "./app/features/kegiatan";
+import InputDataKambing from "./app/features/pencatatan/InputData";
 
 // MainApp functional component to manage splash screen and routing
 const MainApp = () => {
@@ -89,6 +92,15 @@ const MainApp = () => {
 
                 <Route path="laporan-kambing">
                   <Route index element={<LaporanKambing />} />
+                </Route>
+
+                <Route path="perkawinan">
+                  <Route index element={<DataPerkawinan />} />
+                  <Route path="baru" element={<TambahKawin />} />
+                </Route>
+
+                <Route path="kegiatan">
+                  <Route index element={<Kegiatan />} />
                 </Route>
               </Route>
               <Route

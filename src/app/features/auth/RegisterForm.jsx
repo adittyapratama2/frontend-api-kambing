@@ -10,6 +10,7 @@ import { useRegisterMutation } from "../../../state/query/auth"; // Assuming thi
 
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); // To handle confirm password field
   const [role, setRole] = useState("");
@@ -26,16 +27,17 @@ const RegisterForm = () => {
       return;
     }
 
-    if (!username || !password || !role) {
+    if (!username || !password || !role || !name) {
       setError("All fields are required");
       return;
     }
 
     try {
       // Call the register mutation
-      await register({ username, password, role }).unwrap();
+      await register({ username, name, password, role }).unwrap();
       // Reset form state on success
       setUsername("");
+      setName("");
       setPassword("");
       setConfirmPassword("");
       setRole("");
@@ -73,6 +75,16 @@ const RegisterForm = () => {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)} // Controlled input
+                className="w-full pl-12 p-3 md:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-lg"
+              />
+            </div>
+            <div className="relative mb-4 md:mb-6">
+              <UserIcon className="absolute w-5 h-5 md:w-6 md:h-6 text-blue-500 left-3 top-1/2 transform -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Nama"
+                value={name}
+                onChange={(e) => setName(e.target.value)} // Controlled input
                 className="w-full pl-12 p-3 md:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-lg"
               />
             </div>

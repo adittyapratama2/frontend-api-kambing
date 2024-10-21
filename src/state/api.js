@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logout } from "./authSlice";
-import { persistor } from "../store";
 
 // Define the base query for API requests
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3030/v1", // Set your base API URL
+  baseUrl: "https://api.goat.web.id/v1", // Set your base API URL
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token; // Get the token from the auth state
     if (token) {
@@ -20,8 +18,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   if (result.error && result.error.status === 401) {
     // Dispatch logout action if token is invalid
-    api.dispatch(logout());
-    persistor.purge(); // Purge redux-persist state
+    api.dispatch({ type: "auth/logout" });
 
     // Optionally, redirect to login
     window.location.href = "/login"; // Force navigation to login page
@@ -34,6 +31,15 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth, // Use baseQueryWithReauth here
   reducerPath: "api",
-  tagTypes: ["Kambing", "Indukan", "Pejantan", "Kandang"],
+  tagTypes: [
+    "Kambing",
+    "IndukBetina",
+    "IndukPejantan",
+    "Kandang",
+    "Perkawinan",
+    "PertumbuhanKambing",
+    "PemerahanKambing",
+    "KesehatanKambing",
+  ],
   endpoints: (builder) => ({}), // Define your endpoints here
 });

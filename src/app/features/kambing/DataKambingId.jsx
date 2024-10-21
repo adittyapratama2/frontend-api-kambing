@@ -39,17 +39,16 @@ const DataKambingId = () => {
   return (
     <div className="min-h-screen p-2 bg-white">
       <div className="sticky top-0 bg-white z-10 p-2">
-        <div className="flex justify-between items-center ">
+        <div className="flex justify-between items-center">
           <button
             onClick={() => navigate("/dashboard/kambing")}
-            className="p-2 rounded-full text-textPrimary hover:bg-white hover:text-black transition"
+            className="rounded-full text-primary hover:bg-white hover:text-black transition"
           >
             <ArrowLeftIcon className="w-6 h-6" />
           </button>
           <h1 className="p-2 font-bold text-textPrimary mx-auto">
             Detail Kambing
           </h1>
-          {/* Added mx-auto */}
         </div>
       </div>
 
@@ -66,41 +65,41 @@ const DataKambingId = () => {
             </tr>
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Nama</td>
-              <td className="py-2 px-4">{data.goat.nama}</td>
+              <td className="py-2 px-4">{data.goat.nama_kambing}</td>
             </tr>
             <tr className="border-b">
-              <td className="py-2 px-4 font-semibold">Jenis</td>
-              <td className="py-2 px-4">{data.goat.jenis}</td>
+              <td className="py-2 px-4 font-semibold">Ras</td>
+              <td className="py-2 px-4">{data.goat.ras}</td>
             </tr>
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Kelamin</td>
-              <td className="py-2 px-4">{data.goat.kelamin}</td>
+              <td className="py-2 px-4">
+                {data.goat.jenis_kelamin === "jantan" ? "Jantan" : "Betina"}
+              </td>
             </tr>
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Induk</td>
-              <td className="py-2 px-4">{data.goat.induk}</td>
+              <td className="py-2 px-4">
+                {data.goat.indukBetina.nama_kambing}
+              </td>
             </tr>
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Pejantan</td>
-              <td className="py-2 px-4">{data.goat.pejantan}</td>
-            </tr>
-            <tr className="border-b">
-              <td className="py-2 px-4 font-semibold">Asal</td>
-              <td className="py-2 px-4">{data.goat.asal}</td>
+              <td className="py-2 px-4">
+                {data.goat.indukPejantan.nama_kambing}
+              </td>
             </tr>
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Posisi Kandang</td>
-              <td className="py-2 px-4">{data.goat.posisiKandang}</td>
-            </tr>
-            <tr className="border-b">
-              <td className="py-2 px-4 font-semibold">Harga</td>
               <td className="py-2 px-4">
-                Rp {data.goat.harga.toLocaleString()}
+                {data.goat.kandangKambing.nama_kandang}
               </td>
             </tr>
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Status</td>
-              <td className="py-2 px-4">{data.goat.status}</td>
+              <td className="py-2 px-4">
+                {data.goat.status === "hidup" ? "Hidup" : "Mati"}
+              </td>
             </tr>
             <tr>
               <td className="py-2 px-4 font-semibold">QR Code</td>

@@ -7,8 +7,6 @@ import { useSelector } from "react-redux";
 const Dashboard = () => {
   const info = useSelector((state) => state.auth);
 
-  console.log(info.user);
-
   return (
     <div className="min-h-screen bg-white">
       {/* Welcome Card */}
@@ -24,7 +22,7 @@ const Dashboard = () => {
           <div>
             <p>Selamat Datang,</p>
             <h2 className="text-2xl font-bold">{info.user.name}</h2>
-            <p>{info.user.username}</p>
+            <p>{info.user.role}</p>
           </div>
           <img
             src="/assets/image1.jpeg"
@@ -77,69 +75,32 @@ const Dashboard = () => {
         </div>
         {/* Transaksi */}
         <div className="flex flex-col items-center">
-          <Link to="/dashboard/kambing">
+          <Link to="/dashboard/perkawinan">
             <div className="bg-secondary rounded-lg shadow-md">
               <img
-                src="/assets/kambing.png"
-                alt="Kambing"
+                src="/assets/kawin.png"
+                alt="Perkawinan"
                 className="w-[150px] h-[150px] object-cover"
               />
             </div>
           </Link>
-          <p className="mt-2">Kambing</p>
+          <p className="mt-2">Perkawinan</p>
         </div>
+
         {/* Transaksi */}
         <div className="flex flex-col items-center">
-          <Link to="/dashboard/kambing">
+          <Link to="/dashboard/kegiatan">
             <div className="bg-secondary rounded-lg shadow-md">
               <img
-                src="/assets/kambing.png"
-                alt="Kambing"
+                src="/assets/kegiatan.png"
+                alt="Kegiatan"
                 className="w-[150px] h-[150px] object-cover"
               />
             </div>
           </Link>
-          <p className="mt-2">Kambing</p>
+          <p className="mt-2">Kegiatan</p>
         </div>
-        {/* Transaksi */}
-        <div className="flex flex-col items-center">
-          <Link to="/dashboard/kambing">
-            <div className="bg-secondary rounded-lg shadow-md">
-              <img
-                src="/assets/kambing.png"
-                alt="Kambing"
-                className="w-[150px] h-[150px] object-cover"
-              />
-            </div>
-          </Link>
-          <p className="mt-2">Kambing</p>
-        </div>
-        {/* Transaksi */}
-        <div className="flex flex-col items-center">
-          <Link to="/dashboard/kambing">
-            <div className="bg-secondary rounded-lg shadow-md">
-              <img
-                src="/assets/kambing.png"
-                alt="Kambing"
-                className="w-[150px] h-[150px] object-cover"
-              />
-            </div>
-          </Link>
-          <p className="mt-2">Kambing</p>
-        </div>
-        {/* Transaksi */}
-        <div className="flex flex-col items-center">
-          <Link to="/dashboard/kambing">
-            <div className="bg-secondary rounded-lg shadow-md">
-              <img
-                src="/assets/kambing.png"
-                alt="Kambing"
-                className="w-[150px] h-[150px] object-cover"
-              />
-            </div>
-          </Link>
-          <p className="mt-2">Kambing</p>
-        </div>
+
         <div className="flex flex-col items-center mt-4">&nbsp;</div>
         <div className="flex flex-col items-center mt-4">&nbsp;</div>
         {/* More items can be added below */}

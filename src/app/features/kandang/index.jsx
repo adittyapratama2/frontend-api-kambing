@@ -28,7 +28,7 @@ const DataKandang = () => {
           </button>
           <h1 className="p-2 font-bold text-textPrimary mx-auto">Kandang</h1>
           {/* Added mx-auto */}
-          <Link to={"/dashboard/kandang/buat-baru"}>
+          <Link to={"/dashboard/kandang-kambing/buat-baru"}>
             <button className="inline-flex items-center text-primary">
               Tambah
             </button>
@@ -79,9 +79,6 @@ const DataKandang = () => {
                   <h3 className="text-md font-semibold text-textPrimary">
                     {kandang.lokasi}
                   </h3>
-                  <p className="text-xs mt-1 p-1 bg-darkGrey rounded-full">
-                    {kandang.jenis_kandang}
-                  </p>
                 </div>
               </div>
 
@@ -101,7 +98,7 @@ const DataKandang = () => {
             <p className="text-sm">
               Disini anda akan melihat daftar kandang yang anda tambahkan.
             </p>
-            <Link to={"/dashboard/kandang-kambing/baru"}>
+            <Link to={"/dashboard/kandang-kambing/buat-baru"}>
               <button className="mt-4 p-4 bg-primary rounded-full text-white">
                 Tambah Sekarang
               </button>

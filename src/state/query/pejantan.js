@@ -4,38 +4,42 @@ export const pejantanApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPejantan: builder.query({
       query: () => ({
-        url: `/pejantan-kambing`,
+        url: `/induk-pejantan`,
       }),
-      providesTags: [{ type: "Pejantan", id: "LIST" }],
+      providesTags: [{ type: "IndukPejantan", id: "LIST" }],
     }),
     getPejantanById: builder.query({
       query: ({ id }) => ({
-        url: `/pejantan-kambing/${id}`,
+        url: `/induk-pejantan/${id}`,
       }),
-      providesTags: (result, error, id) => [{ type: "Pejantan", id }],
+      providesTags: (result, error, id) => [{ type: "IndukPejantan", id }],
     }),
     createPejantanBaru: builder.mutation({
       query: (data) => ({
-        url: "/pejantan-kambing",
+        url: "/induk-pejantan",
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [{ type: "Pejantan", id: "LIST" }],
+      invalidatesTags: [{ type: "IndukPejantan", id: "LIST" }],
     }),
     updatePejantan: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/pejantan-kambing/${id}`,
+        url: `/induk-pejantan/${id}`,
         method: "PUT", // Use PUT for update
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Pejantan", id }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "IndukPejantan", id },
+      ],
     }),
     deletePejantan: builder.mutation({
       query: ({ id }) => ({
-        url: `/pejantan-kambing/${id}`,
+        url: `/induk-pejantan/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Pejantan", id }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "IndukPejantan", id },
+      ],
     }),
   }),
 });

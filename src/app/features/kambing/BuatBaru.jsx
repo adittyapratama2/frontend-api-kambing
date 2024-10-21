@@ -1,67 +1,130 @@
 import React, { useState } from "react";
 import { useCreateKambingBaruMutation } from "../../../state/query/kambing";
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import KambingForm from "./components/Kambing";
+import BetinaForm from "./components/Betina";
+import PejantanForm from "./components/Pejantan";
+import { useCreateIndukBetinaBaruMutation } from "../../../state/query/betina";
+import { useCreatePejantanBaruMutation } from "../../../state/query/pejantan";
 
 const BuatKambingBaru = () => {
   const [createKambing] = useCreateKambingBaruMutation();
+  const [createBetina] = useCreateIndukBetinaBaruMutation();
+  const [createPejantan] = useCreatePejantanBaruMutation();
 
   const navigate = useNavigate();
 
   // Form state for new kambing
   const [formData, setFormData] = useState({
-    tanggalLahir: "",
-    nama: "",
-    bobot: "",
-    kelamin: "", // default value for kelamin
     jenis: "",
-    induk: "",
-    pejantan: "",
-    posisiKandang: "",
-    asal: "",
-    harga: "",
-    status: "",
+    kambing: {
+      nama_kambing: "",
+      ras: "",
+      tanggal_lahir: "",
+      jenis_kelamin: "",
+      id_kambing_betina: "",
+      id_kambing_jantan: "",
+      id_kandang: "",
+      warna_dominan: "",
+      status: "",
+    },
+    betina: {
+      nama_kambing: "",
+      ras: "",
+      warna_dominan: "",
+    },
+    pejantan: {
+      nama_kambing: "",
+      ras: "",
+      warna_dominan: "",
+    },
   });
 
   // Handle form input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    // If the 'jenis' field changes, reset the relevant form data
+    if (name === "jenis") {
+      setFormData({
+        ...formData,
+        jenis: value,
+        kambing: {
+          nama_kambing: "",
+          ras: "",
+          tanggal_lahir: "",
+          jenis_kelamin: "",
+          id_kambing_betina: "",
+          id_kambing_jantan: "",
+          id_kandang: "",
+          warna_dominan: "",
+          status: "",
+        },
+        betina: {
+          nama_kambing: "",
+          ras: "",
+          warna_dominan: "",
+        },
+        pejantan: {
+          nama_kambing: "",
+          ras: "",
+          warna_dominan: "",
+        },
+      });
+    } else {
+      // Handle inputs based on current jenis
+      if (formData.jenis === "kambing") {
+        setFormData((prevData) => ({
+          ...prevData,
+          kambing: {
+            ...prevData.kambing,
+            [name]: value,
+          },
+        }));
+      } else if (formData.jenis === "betina") {
+        setFormData((prevData) => ({
+          ...prevData,
+          betina: {
+            ...prevData.betina,
+            [name]: value,
+          },
+        }));
+      } else if (formData.jenis === "pejantan") {
+        setFormData((prevData) => ({
+          ...prevData,
+          pejantan: {
+            ...prevData.pejantan,
+            [name]: value,
+          },
+        }));
+      }
+    }
   };
 
-  // Reset the form to its initial state
-  const resetForm = () => {
-    setFormData({
-      tanggalLahir: "",
-      nama: "",
-      bobot: "",
-      kelamin: "",
-      jenis: "",
-      induk: "",
-      pejantan: "",
-      posisiKandang: "",
-      asal: "",
-      harga: "",
-      status: "",
-    });
-  };
-
-  // Handle form submission inside the modal
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Submit the form data using the mutation
-      const result = await createKambing(formData).unwrap();
+      let result;
+
+      // Submit based on jenis
+      if (formData.jenis === "kambing") {
+        result = await createKambing(formData.kambing).unwrap();
+      } else if (formData.jenis === "betina") {
+        result = await createBetina(formData.betina).unwrap();
+      } else if (formData.jenis === "pejantan") {
+        result = await createPejantan(formData.pejantan).unwrap();
+      }
+
       console.log("Form Data Submitted:", result);
+      navigate("/dashboard/kambing");
     } catch (error) {
       console.error("Error submitting form:", error);
-      // You can handle error messages here if needed
     }
   };
+
   return (
     <div className="min-h-screen p-2 bg-white">
       {/* Header and Create Button */}
@@ -76,98 +139,50 @@ const BuatKambingBaru = () => {
           <h1 className="p-2 font-bold text-textPrimary mx-auto">
             Tambah Kambing
           </h1>
-          {/* Added mx-auto */}
         </div>
       </div>
 
       {/* Form */}
-      <form className="space-y-4 mt-4 p-2">
+      <form className="space-y-4 mt-4 p-2" onSubmit={handleSubmit}>
         <div>
-          <label className="block text-textPrimary">Perkawinan</label>
-          <select className="w-full border rounded-lg p-3 text-textPrimary">
-            <option>Pilih Perkawinan</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Nama Kambing</label>
-          <input
-            type="text"
-            placeholder="Masukan nama kambing"
-            className="w-full border rounded-lg p-3 text-gray-700"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Jenis Kelamin</label>
-          <select className="w-full border rounded-lg p-3 text-gray-700">
-            <option>Pilih Jenis Kelamin</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Tanggal Lahir</label>
-          <input
-            type="date"
-            className="w-full border rounded-lg p-3 text-gray-700"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Tanggal Masuk Kandang</label>
-          <input
-            type="date"
-            className="w-full border rounded-lg p-3 text-gray-700"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Bobot</label>
-          <input
-            type="number"
-            placeholder="Masukan bobot"
-            className="w-full border rounded-lg p-3 text-gray-700"
-          />
-          <small className="text-gray-500">
-            Masukan angka dalam satuan kilogram
-          </small>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Group Kambing</label>
-          <select className="w-full border rounded-lg p-3 text-textPrimary">
-            <option>Pilih Group Kambing</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Asal Kambing</label>
-          <select className="w-full border rounded-lg p-3 text-textPrimary">
-            <option>Pilih Asal Kambing</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Induk Jantan</label>
-          <select className="w-full border rounded-lg p-3 text-textPrimary">
-            <option>Pilih Induk Jantan</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Induk Betina</label>
-          <select className="w-full border rounded-lg p-3 text-textPrimary">
-            <option>Pilih Induk Betina</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Catatan</label>
-          <textarea
+          <label className="block text-textPrimary mb-2">Jenis Kambing</label>
+          <select
+            name="jenis"
+            value={formData.jenis}
+            onChange={handleInputChange}
             className="w-full border rounded-lg p-3 text-textPrimary"
-            placeholder="Masukan Catatan"
-          />
+          >
+            <option value="">Pilih Jenis</option>
+            <option value="kambing">Kambing</option>
+            <option value="betina">Indukan Betina</option>
+            <option value="pejantan">Indukan Pejantan</option>
+          </select>
         </div>
+
+        {/* Render specific form based on selected jenis */}
+        {formData.jenis === "kambing" && (
+          <KambingForm
+            formData={formData.kambing}
+            handleInputChange={handleInputChange}
+            jenis={formData.jenis}
+          />
+        )}
+
+        {formData.jenis === "betina" && (
+          <BetinaForm
+            formData={formData.betina}
+            handleInputChange={handleInputChange}
+            jenis={formData.jenis}
+          />
+        )}
+
+        {formData.jenis === "pejantan" && (
+          <PejantanForm
+            formData={formData.pejantan}
+            handleInputChange={handleInputChange}
+            jenis={formData.jenis}
+          />
+        )}
 
         <button
           type="submit"
