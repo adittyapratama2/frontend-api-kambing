@@ -26,6 +26,14 @@ import DataPerkawinan from "./app/features/perkawinan";
 import TambahKawin from "./app/features/perkawinan/TambahKawin";
 import Kegiatan from "./app/features/kegiatan";
 import InputDataKambing from "./app/features/pencatatan/InputData";
+import KandangId from "./app/features/kandang/KandangId";
+import CatatPakan from "./app/features/pencatatan/InputPakan";
+import ProduksiSusu from "./app/features/produksi-susu";
+import PakanKandang from "./app/features/pakan";
+import ListProduksiSusu from "./app/features/produksi-susu";
+import UserIndex from "./app/features/user";
+import NewUser from "./app/features/user/newUser";
+import KambingReport from "./app/features/laporan/components/KambingReport";
 
 // MainApp functional component to manage splash screen and routing
 const MainApp = () => {
@@ -86,17 +94,32 @@ const MainApp = () => {
                 <Route path="kandang-kambing">
                   <Route index element={<DataKandang />} />
                   <Route path="buat-baru" element={<BuatKandang />} />
-                  <Route path=":id" element={<DataIndukan />} />
+                  <Route path=":id" element={<KandangId />} />
                   <Route path="update/:id" element={<EditIndukan />} />
+                  <Route path="input-pakan/:id" element={<CatatPakan />} />
+                </Route>
+
+                <Route path="pakan-kandang">
+                  <Route index element={<PakanKandang />} />
                 </Route>
 
                 <Route path="laporan-kambing">
                   <Route index element={<LaporanKambing />} />
+                  <Route path="detail/:id" element={<KambingReport />} />
+                </Route>
+
+                <Route path="produksi-susu-kambing">
+                  <Route index element={<ListProduksiSusu />} />
                 </Route>
 
                 <Route path="perkawinan">
                   <Route index element={<DataPerkawinan />} />
                   <Route path="baru" element={<TambahKawin />} />
+                </Route>
+
+                <Route path="user-management">
+                  <Route index element={<UserIndex />} />
+                  <Route path="baru" element={<NewUser />} />
                 </Route>
 
                 <Route path="kegiatan">

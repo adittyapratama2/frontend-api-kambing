@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define the base query for API requests
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://api.goat.web.id/v1", // Set your base API URL
+  // baseUrl: "https://api.goat.web.id/v1",
+  baseUrl: "http://localhost:3030/v1",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token; // Get the token from the auth state
     if (token) {
@@ -40,6 +41,8 @@ export const apiSlice = createApi({
     "PertumbuhanKambing",
     "PemerahanKambing",
     "KesehatanKambing",
+    "PakanKandang",
+    "ProduksiSusu",
   ],
   endpoints: (builder) => ({}), // Define your endpoints here
 });

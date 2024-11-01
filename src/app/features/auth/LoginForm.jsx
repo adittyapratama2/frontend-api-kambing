@@ -15,12 +15,13 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // State for error message
 
   const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError(""); // Reset error state before each login attempt
     dispatch(loginRequest());
 
     try {
@@ -30,6 +31,7 @@ const LoginForm = () => {
       navigate("/dashboard");
     } catch (error) {
       dispatch(loginFailure(error.message));
+      setError("Login failed. Please check your credentials."); // Set error message
       console.log("Login failed. Please check your credentials.");
     }
   };
@@ -58,6 +60,8 @@ const LoginForm = () => {
           <p className="text-sm text-textPrimary mt-2">
             Silakan masuk untuk mulai mengelola kambing kesayangan Anda!
           </p>
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}{" "}
+          {/* Display error message */}
           <form onSubmit={handleSubmit} className="mt-6">
             <div className="relative mb-4">
               <input

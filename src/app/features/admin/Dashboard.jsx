@@ -49,7 +49,7 @@ const Dashboard = () => {
         </div>
         {/* Produksi Susu */}
         <div className="flex flex-col items-center">
-          <Link to="/dashboard/kambing">
+          <Link to="/dashboard/produksi-susu-kambing">
             <div className="bg-secondary rounded-lg shadow-md">
               <img
                 src="/assets/susu.png"
@@ -99,6 +99,34 @@ const Dashboard = () => {
             </div>
           </Link>
           <p className="mt-2">Kegiatan</p>
+        </div>
+
+        {/* Transaksi */}
+        <div className="flex flex-col items-center">
+          <Link to="/dashboard/pakan-kandang">
+            <div className="bg-secondary rounded-lg shadow-md">
+              <img
+                src="/assets/feed-goat.png"
+                alt="Pakan"
+                className="w-[150px] h-[150px] object-cover"
+              />
+            </div>
+          </Link>
+          <p className="mt-2">Pakan Kandang</p>
+        </div>
+
+        {/* Transaksi */}
+        <div className="flex flex-col items-center">
+          <Link to="/dashboard/laporan-kambing">
+            <div className="bg-secondary rounded-lg shadow-md">
+              <img
+                src="/assets/laporan.png"
+                alt="Pakan"
+                className="w-[150px] h-[150px] object-cover"
+              />
+            </div>
+          </Link>
+          <p className="mt-2">Laporan</p>
         </div>
 
         <div className="flex flex-col items-center mt-4">&nbsp;</div>

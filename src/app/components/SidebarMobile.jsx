@@ -52,7 +52,10 @@ const SidebarMobile = ({ sidebar, closeSidebar }) => {
           </Link>
         </li>
         <li className="p-4 hover:bg-blue-600 transition-colors duration-200 ease-in-out rounded-md mx-4">
-          <Link to="/dashboard/user" className="flex items-center space-x-2">
+          <Link
+            to="/dashboard/user-management"
+            className="flex items-center space-x-2"
+          >
             <UserIcon className="w-6 h-6" />
             <span>Users</span>
           </Link>

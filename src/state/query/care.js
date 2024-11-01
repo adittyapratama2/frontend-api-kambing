@@ -3,8 +3,8 @@ import { apiSlice } from "../api";
 export const kegiatanApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getKegiatan: builder.query({
-      query: () => ({
-        url: `/cares`,
+      query: ({ limit, offset }) => ({
+        url: `/cares?limit=${limit}&offset=${offset}`, // Add limit and offset to the URL
       }),
       providesTags: [
         { type: "PemerahanKambing", id: "LIST" },

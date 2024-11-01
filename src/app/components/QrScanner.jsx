@@ -22,10 +22,21 @@ const QRScanner = () => {
         setLoading(true);
 
         let pathToNavigate;
-        if (result.data.startsWith("http")) {
-          pathToNavigate = result.data;
-        } else {
-          pathToNavigate = `/dashboard/kambing/input-data/${result.data}`;
+        try {
+          // Parse result.data as JSON
+          const qrData = JSON.parse(result.data);
+
+          // Check if it contains `id` and `jenis`
+          if (qrData.jenis === "kandang") {
+            pathToNavigate = `/dashboard/kandang-kambing/input-pakan/${qrData.id}`;
+          } else if (qrData.jenis === "kambing") {
+            pathToNavigate = `/dashboard/kambing/input-data/${qrData.id}`;
+          } else {
+            console.error("Unknown jenis in QR code data:", qrData.jenis);
+          }
+        } catch (error) {
+          console.error("Error parsing QR code data:", error);
+          pathToNavigate = "/error"; // Fallback in case of a parsing error
         }
 
         console.log("Navigating to:", pathToNavigate);

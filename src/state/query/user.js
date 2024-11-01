@@ -8,7 +8,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: [{ type: "User" }],
     }),
+    getUser: builder.query({
+      query: () => ({
+        url: `/users`,
+      }),
+      providesTags: [{ type: "User" }],
+    }),
   }),
 });
 
-export const { useGetUserIdQuery } = userApiSlice;
+export const { useGetUserIdQuery, useGetUserQuery } = userApiSlice;

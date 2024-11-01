@@ -15,6 +15,7 @@ export default {
       grey: "#F8F9FE",
       darkGrey: "#E8E9F1",
       white: "#FFFFFF",
+      lightGreen: "#3AC0A0",
     },
     extend: {
       keyframes: {

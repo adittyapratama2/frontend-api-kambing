@@ -1,6 +1,6 @@
 import { useGetKambingQuery } from "../../../state/query/kambing";
 import { Link, useNavigate } from "react-router-dom";
-import { FaMars, FaSearch, FaVenus } from "react-icons/fa";
+import { FaEllipsisV, FaMars, FaSearch, FaVenus } from "react-icons/fa";
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { LuArrowUpDown } from "react-icons/lu";
 import { IoFilterSharp } from "react-icons/io5";
@@ -12,6 +12,13 @@ const DataKambing = () => {
   const navigate = useNavigate();
   const [filterType, setFilterType] = useState("kambing"); // Default filter
   const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown open state
+
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  const toggleDropdown = (id) => {
+    // If the clicked dropdown is already open, close it; otherwise, open the clicked one
+    setOpenDropdownId(openDropdownId === id ? null : id);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data</div>;
@@ -28,9 +35,39 @@ const DataKambing = () => {
         </div>
       );
       detailKambing = (
-        <button className="text-gray-400 hover:text-gray-600">
-          <IoIosMore />
-        </button>
+        <div className="relative inline-block text-left">
+          <button
+            onClick={() => toggleDropdown(kambing.id)} // Pass kambing.id to identify which dropdown to toggle
+            className="text-xl text-textSecondary cursor-pointer hover:text-teal-300 transition duration-200"
+          >
+            <FaEllipsisV />
+          </button>
+          {openDropdownId === kambing.id && ( // Check if the current kambing.id is the open dropdown
+            <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
+              <Link
+                to={`/dashboard/induk-kambing-betina/${kambing.id}`}
+                className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+              >
+                Lihat Detail
+              </Link>
+              <Link
+                to={`/dashboard/induk-kambing-betina/edit/${kambing.id}`}
+                className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+              >
+                Ubah Data
+              </Link>
+              <button
+                className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
+                onClick={() => {
+                  // Handle delete action here
+                  console.log("Hapus clicked");
+                }}
+              >
+                Hapus
+              </button>
+            </div>
+          )}
+        </div>
       );
     } else if (filterType === "induk_pejantan") {
       genderIcon = (
@@ -39,9 +76,39 @@ const DataKambing = () => {
         </div>
       );
       detailKambing = (
-        <button className="text-gray-400 hover:text-gray-600">
-          <IoIosMore />
-        </button>
+        <div className="relative inline-block text-left">
+          <button
+            onClick={() => toggleDropdown(kambing.id)} // Pass kambing.id to identify which dropdown to toggle
+            className="text-xl text-textSecondary cursor-pointer hover:text-teal-300 transition duration-200"
+          >
+            <FaEllipsisV />
+          </button>
+          {openDropdownId === kambing.id && ( // Check if the current kambing.id is the open dropdown
+            <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
+              <Link
+                to={`/dashboard/induk-kambing-betina/${kambing.id}`}
+                className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+              >
+                Lihat Detail
+              </Link>
+              <Link
+                to={`/dashboard/induk-kambing-betina/edit/${kambing.id}`}
+                className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+              >
+                Ubah Data
+              </Link>
+              <button
+                className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
+                onClick={() => {
+                  // Handle delete action here
+                  console.log("Hapus clicked");
+                }}
+              >
+                Hapus
+              </button>
+            </div>
+          )}
+        </div>
       );
     } else if (filterType === "kambing") {
       // Assuming first_kambing has its own structure, handle accordingly
@@ -53,17 +120,45 @@ const DataKambing = () => {
             </div>
           ) : (
             <div className="bg-pink rounded-full flex items-center justify-center w-10 h-10">
-              <FaVenus className="text-pink w-6 h-6" />
+              <FaVenus className="text-white w-6 h-6" />
             </div>
           )}
         </div>
       );
       detailKambing = (
-        <Link to={`/dashboard/kambing/${kambing.id}`}>
-          <button className="text-gray-400 hover:text-gray-600">
-            <IoIosMore />
+        <div className="relative inline-block text-left">
+          <button
+            onClick={() => toggleDropdown(kambing.id)} // Pass kambing.id to identify which dropdown to toggle
+            className="text-xl text-textSecondary cursor-pointer hover:text-teal-300 transition duration-200"
+          >
+            <FaEllipsisV />
           </button>
-        </Link>
+          {openDropdownId === kambing.id && ( // Check if the current kambing.id is the open dropdown
+            <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
+              <Link
+                to={`/dashboard/induk-kambing-betina/${kambing.id}`}
+                className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+              >
+                Lihat Detail
+              </Link>
+              <Link
+                to={`/dashboard/induk-kambing-betina/edit/${kambing.id}`}
+                className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+              >
+                Ubah Data
+              </Link>
+              <button
+                className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
+                onClick={() => {
+                  // Handle delete action here
+                  console.log("Hapus clicked");
+                }}
+              >
+                Hapus
+              </button>
+            </div>
+          )}
+        </div>
       );
     }
 

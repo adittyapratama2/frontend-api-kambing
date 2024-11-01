@@ -35,7 +35,7 @@ const FooterNavbar = () => {
 
           {/* User Button */}
           <div className="flex flex-col items-center">
-            <Link to="/dashboard/user">
+            <Link to="/dashboard/user-management">
               <FaRegUser className="h-6 w-6 text-primary" />
             </Link>
             <span className="text-xs text-textPrimary mt-1">User</span>

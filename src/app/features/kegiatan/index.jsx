@@ -1,16 +1,42 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
-import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaRegClipboard, FaSearch } from "react-icons/fa";
 import { IoFilterSharp } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { HiDotsHorizontal } from "react-icons/hi";
 import { useGetKegiatanQuery } from "../../../state/query/care";
 
 const Kegiatan = () => {
-  const { data: kegiatan, isLoading, error } = useGetKegiatanQuery();
-  const [filterType, setFilterType] = useState("all");
+  const [limit, setLimit] = useState(10);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const offset = 0; // Fixed limit of 10
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const {
+    data: kegiatan,
+    isLoading,
+    error,
+  } = useGetKegiatanQuery({ limit, offset });
+
+  const handleLoadMore = () => {
+    setIsLoadingMore(true);
+    setLimit((prevLimit) => prevLimit + 10); // Increment limit by 10
+  };
+  const [filterType, setFilterType] = useState("pertumbuhan");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && isLoadingMore) {
+      setIsLoadingMore(false); // Reset loading state when not loading
+    }
+  }, [isLoading, isLoadingMore]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data</div>;
@@ -19,79 +45,179 @@ const Kegiatan = () => {
     return (
       <div
         key={item.id}
-        className="p-4 mb-4 rounded-lg shadow-lg bg-white border border-gray-200"
+        className="block rounded-lg bg-lightGreen shadow-secondary-1 text-surface"
       >
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="text-sm text-gray-500">
-              ID Kambing: {item.id_kambing || "N/A"}
-            </p>
-          </div>
-          <div className="flex items-center">
-            <span className="px-2 py-1 text-xs font-semibold text-white bg-teal-500 rounded-lg">
-              Vaksin
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 bg-teal-600 rounded-lg shadow-md">
+          <div className="flex items-center space-x-2">
+            <span className="text-lg font-semibold text-white">
+              <FaRegClipboard />
             </span>
-            <div className="ml-2 text-gray-400 cursor-pointer">...</div>
+            <span className="text-md font-semibold text-white">
+              {filterType === "pertumbuhan"
+                ? "Pertumbuhan"
+                : filterType === "kesehatan"
+                ? "Kesehatan"
+                : filterType === "pemerahan"
+                ? "Pemerahan"
+                : filterType === "produksi_susu"
+                ? "Produksi Susu"
+                : filterType === "pakan_kandang"
+                ? "Pakan Kandang"
+                : "Catatan"}
+            </span>
+          </div>
+          <div className="relative inline-block text-left">
+            <button
+              onClick={toggleDropdown}
+              className="text-2xl text-white cursor-pointer hover:text-teal-300 transition duration-200"
+            >
+              <HiDotsHorizontal />
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
+                <Link
+                  to={`/dashboard/${
+                    filterType === "pakan_kandang"
+                      ? "pakan-kandang"
+                      : filterType === "pertumbuhan"
+                      ? "pertumbuhan-kambing"
+                      : filterType === "kesehatan"
+                      ? "kesehatan-kambing"
+                      : filterType === "pemerahan"
+                      ? "pemerahan-kambing"
+                      : filterType === "produksi_susu"
+                      ? "produksi-susu-kambing"
+                      : ""
+                  }/${item.id}`}
+                  className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+                >
+                  Lihat Detail
+                </Link>
+                <Link
+                  to={`/dashboard/${
+                    filterType === "pakan_kandang"
+                      ? "pakan-kandang"
+                      : filterType === "pertumbuhan"
+                      ? "pertumbuhan-kambing"
+                      : filterType === "kesehatan"
+                      ? "kesehatan-kambing"
+                      : filterType === "pemerahan"
+                      ? "pemerahan-kambing"
+                      : filterType === "produksi_susu"
+                      ? "produksi-susu-kambing"
+                      : ""
+                  }/edit/${item.id}`}
+                  className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
+                >
+                  Edit
+                </Link>
+                <button
+                  className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
+                  onClick={() => {
+                    // Handle delete action here
+                    console.log(`${filterType} Hapus clicked`);
+                  }}
+                >
+                  Hapus
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {filterType === "pertumbuhan" && (
-          <>
-            <p className="text-sm text-gray-600">
-              <strong>Tanggal Pencatatan:</strong>{" "}
-              {item.tanggal_pencatatan || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Berat Badan:</strong> {item.berat_badan} kg
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Tinggi Badan:</strong> {item.tinggi_badan || "N/A"} cm
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Lingkar Dada:</strong> {item.lingkar_dada || "N/A"} cm
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Kondisi Fisik:</strong> {item.kondisi_fisik || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Catatan:</strong> {item.catatan || "N/A"}
-            </p>
-          </>
-        )}
+        <div className="bg-white p-2 shadow-lg rounded-b-lg">
+          {filterType === "pertumbuhan" && (
+            <>
+              <p className="text-sm text-gray-600">
+                <strong>Tanggal Pencatatan:</strong>{" "}
+                {item.tanggal_pencatatan || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Berat Badan:</strong> {item.berat_badan} kg
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Tinggi Badan:</strong> {item.tinggi_badan || "N/A"} cm
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Lingkar Dada:</strong> {item.lingkar_dada || "N/A"} cm
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Kondisi Fisik:</strong> {item.kondisi_fisik || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Catatan:</strong> {item.catatan || "N/A"}
+              </p>
+            </>
+          )}
 
-        {filterType === "pemerahan" && (
-          <>
-            <p className="text-sm text-gray-600">
-              <strong>Tanggal Perah:</strong> {item.tanggal_perah || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Volume Susu:</strong> {item.volume_susu || "N/A"} liter
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Kualitas Susu:</strong> {item.kualitas_susu || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Catatan Perah:</strong> {item.catatan_perah || "N/A"}
-            </p>
-          </>
-        )}
+          {filterType === "pemerahan" && (
+            <>
+              <p className="text-sm text-gray-600">
+                <strong>Tanggal Perah:</strong> {item.tanggal_perah || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Volume Susu:</strong> {item.volume_susu || "N/A"} liter
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Kualitas Susu:</strong> {item.kualitas_susu || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Catatan Perah:</strong> {item.catatan_perah || "N/A"}
+              </p>
+            </>
+          )}
 
-        {filterType === "kesehatan" && (
-          <>
-            <p className="text-sm text-gray-600">
-              <strong>Tanggal Periksa:</strong> {item.tanggal_periksa || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Diagnosa:</strong> {item.diagnosa || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Pengobatan:</strong> {item.pengobatan || "N/A"}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Vaksinasi:</strong> {item.vaksinasi || "N/A"}
-            </p>
-          </>
-        )}
+          {filterType === "pakan_kandang" && (
+            <>
+              <p className="text-sm text-gray-600">
+                <strong>Tanggal Pencatatan:</strong>{" "}
+                {item.tgl_transaksi || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Qty Pakan:</strong> {item.qty_pakan.toLocaleString()} kg
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Catatan:</strong> {item.catatan || "N/A"}
+              </p>
+            </>
+          )}
+
+          {filterType === "produksi_susu" && (
+            <>
+              <p className="text-sm text-gray-600">
+                <strong>Tanggal Perah:</strong> {item.tanggal_perah || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Volume Susu:</strong> {item.volume_susu || "N/A"} liter
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Kualitas Susu:</strong> {item.kualitas_susu || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Catatan Perah:</strong> {item.catatan_perah || "N/A"}
+              </p>
+            </>
+          )}
+
+          {filterType === "kesehatan" && (
+            <>
+              <p className="text-sm text-gray-600">
+                <strong>Tanggal Periksa:</strong>{" "}
+                {item.tanggal_periksa || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Diagnosa:</strong> {item.diagnosa || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Pengobatan:</strong> {item.pengobatan || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Vaksinasi:</strong> {item.vaksinasi || "N/A"}
+              </p>
+            </>
+          )}
+        </div>
       </div>
     );
   });
@@ -138,15 +264,6 @@ const Kegiatan = () => {
             <div className="absolute right-0 bg-white shadow-lg rounded-lg mt-2 z-20">
               <div
                 onClick={() => {
-                  setFilterType("all");
-                  setDropdownOpen(false);
-                }}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
-              >
-                Semua
-              </div>
-              <div
-                onClick={() => {
                   setFilterType("pertumbuhan");
                   setDropdownOpen(false);
                 }}
@@ -162,6 +279,24 @@ const Kegiatan = () => {
                 className="p-2 hover:bg-gray-100 cursor-pointer"
               >
                 Pemerahan
+              </div>
+              <div
+                onClick={() => {
+                  setFilterType("produksi_susu");
+                  setDropdownOpen(false);
+                }}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+              >
+                Produksi Susu
+              </div>
+              <div
+                onClick={() => {
+                  setFilterType("pakan_kandang");
+                  setDropdownOpen(false);
+                }}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+              >
+                Pakan Kandang
               </div>
               <div
                 onClick={() => {
@@ -186,9 +321,10 @@ const Kegiatan = () => {
             <h3 className="text-lg font-semibold text-textPrimary">
               {(() => {
                 const messages = {
-                  all: "Belum ada kegiatan.",
                   pertumbuhan: "Belum ada kegiatan pertumbuhan.",
                   pemerahan: "Belum ada kegiatan pemerahan.",
+                  produksi_susu: "Belum ada kegiatan produksi susu.",
+                  pakan_kandang: "Belum ada kegiatan pakan kandang.",
                   kesehatan: "Belum ada kegiatan kesehatan.",
                 };
 
@@ -200,6 +336,16 @@ const Kegiatan = () => {
             </p>
           </div>
         )}
+        <div className="flex justify-center">
+          <button
+            className="p-2 mb-4 bg-primary rounded-full text-white"
+            onClick={handleLoadMore}
+            disabled={isLoadingMore}
+          >
+            {isLoadingMore ? "Loading..." : "Load More"}
+          </button>
+        </div>
+        <div>&nbsp;</div>
       </div>
     </div>
   );

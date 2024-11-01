@@ -139,8 +139,8 @@ const KambingForm = ({ formData, handleInputChange, jenis }) => {
               className="w-full border rounded-lg p-3 text-textPrimary"
             >
               <option value="">Pilih Status</option>
-              <option value="hidup">Hidup</option>
-              <option value="mati">Mati</option>
+              <option value="1">Hidup</option>
+              <option value="2">Mati</option>
             </select>
           </div>
         </div>

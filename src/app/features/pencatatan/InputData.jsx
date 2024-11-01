@@ -8,6 +8,8 @@ import { useGetKambingByIdQuery } from "../../../state/query/kambing";
 import { useCreatePertumbuhanKambingBaruMutation } from "../../../state/query/pertumbuhan";
 import { useCreatePemerahanKambingBaruMutation } from "../../../state/query/pemerahan";
 import { useCreateKesehatanKambingBaruMutation } from "../../../state/query/kesehatan";
+import { useCreateProduksiSusuBaruMutation } from "../../../state/query/produksiSusu";
+import ProduksiSusu from "./components/ProduksiSusu";
 
 const InputDataKambing = () => {
   const { id } = useParams(); // Get the id from the URL parameters
@@ -16,6 +18,7 @@ const InputDataKambing = () => {
   const [createTumbuh] = useCreatePertumbuhanKambingBaruMutation();
   const [createPemerahan] = useCreatePemerahanKambingBaruMutation();
   const [createKesehatan] = useCreateKesehatanKambingBaruMutation();
+  const [createProduksiSusu] = useCreateProduksiSusuBaruMutation();
 
   const navigate = useNavigate();
 
@@ -35,7 +38,7 @@ const InputDataKambing = () => {
       id_kambing: id,
       tanggal_perah: "",
       volume_susu: "",
-      kualitas_susus: "",
+      kualitas_susu: "",
       catatan_perah: "",
     },
     kesehatan: {
@@ -44,6 +47,14 @@ const InputDataKambing = () => {
       diagnosa: "",
       pengobatan: "",
       vaksinasi: "",
+    },
+    produksi_susu: {
+      id_kambing: id,
+      tanggal_produksi: "",
+      volume_susu: "",
+      kualitas_susu: "",
+      periode_laktasi: "",
+      catatan: "",
     },
   });
 
@@ -82,6 +93,14 @@ const InputDataKambing = () => {
           pengobatan: "",
           vaksinasi: "",
         },
+        produksi_susu: {
+          id_kambing: id,
+          tanggal_produksi: "",
+          volume_susu: "",
+          kualitas_susu: "",
+          periode_laktasi: "",
+          catatan: "",
+        },
       });
     } else {
       // Handle inputs based on current jenis
@@ -109,6 +128,14 @@ const InputDataKambing = () => {
             [name]: value,
           },
         }));
+      } else if (formData.jenis === "produksi_susu") {
+        setFormData((prevData) => ({
+          ...prevData,
+          produksi_susu: {
+            ...prevData.produksi_susu,
+            [name]: value,
+          },
+        }));
       }
     }
   };
@@ -127,8 +154,9 @@ const InputDataKambing = () => {
         result = await createPemerahan(formData.pemerahan).unwrap();
       } else if (formData.jenis === "kesehatan") {
         result = await createKesehatan(formData.kesehatan).unwrap();
+      } else if (formData.jenis === "produksi_susu") {
+        result = await createProduksiSusu(formData.produksi_susu).unwrap();
       }
-
       console.log("Form Data Submitted:", result);
       navigate("/dashboard/kegiatan");
     } catch (error) {
@@ -172,6 +200,7 @@ const InputDataKambing = () => {
             <option value="pertumbuhan">Pertumbuhan</option>
             <option value="pemerahan">Pemerahan</option>
             <option value="kesehatan">Kesehatan</option>
+            <option value="produksi_susu">Produksi Susu</option>
           </select>
         </div>
         {/* Render specific form based on selected jenis */}
@@ -193,6 +222,14 @@ const InputDataKambing = () => {
 
         {formData.jenis === "kesehatan" && (
           <Kesehatan
+            formData={formData.kesehatan}
+            handleInputChange={handleInputChange}
+            jenis={formData.jenis}
+          />
+        )}
+
+        {formData.jenis === "produksi_susu" && (
+          <ProduksiSusu
             formData={formData.kesehatan}
             handleInputChange={handleInputChange}
             jenis={formData.jenis}

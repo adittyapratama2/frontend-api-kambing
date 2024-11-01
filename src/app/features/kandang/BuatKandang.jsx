@@ -91,8 +91,8 @@ const BuatKandang = () => {
             className="w-full border rounded-lg p-3 text-textPrimary"
           >
             <option value="">Pilih Jenis Kandang</option>
-            <option value="indukan">Indukan</option>
-            <option value="bayi">Bayi</option>
+            <option value="1">Indukan</option>
+            <option value="2">Bayi</option>
           </select>
         </div>
         <div>

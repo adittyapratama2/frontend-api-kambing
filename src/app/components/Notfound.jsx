@@ -49,7 +49,7 @@ const NotFoundPage = () => {
         >
           <Link
             to="/dashboard"
-            className="inline-flex items-center text-lg font-medium text-white bg-blue-500 hover:bg-blue-700 px-6 py-3 rounded-lg shadow-md transition-all duration-300"
+            className="inline-flex items-center text-lg font-medium text-white bg-primary hover:bg-blue-700 px-6 py-3 rounded-lg shadow-md transition-all duration-300"
           >
             <ArrowLeftCircleIcon className="w-5 h-5 mr-2" />
             Kembali ke Dashboard
