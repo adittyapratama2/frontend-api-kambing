@@ -115,12 +115,12 @@ const KandangReport = () => {
                   className="mb-4 p-2 border border-gray-200 rounded-md"
                 >
                   <p className="font-bold">
-                    Tanggal Periksa:{" "}
+                    Tanggal Catat:{" "}
                     <span className="font-normal">{data.date}</span>
                   </p>
                   <p className="font-bold">
                     Qty Pakan:{" "}
-                    <span className="font-normal">{data.qtyPakan}</span>
+                    <span className="font-normal">{data.qtyPakan} Kg</span>
                   </p>
                   <p className="font-bold">
                     Catatan: <span className="font-normal">{data.catatan}</span>

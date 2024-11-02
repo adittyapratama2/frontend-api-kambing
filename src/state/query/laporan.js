@@ -37,8 +37,8 @@ export const laporanApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     getLaporanKandangById: builder.query({
-      query: ({ id }) => ({
-        url: `/laporan-kambing/detail-kandang/${id}`,
+      query: ({ id, startDate, endDate }) => ({
+        url: `/laporan-kambing/detail-kandang/${id}?start=${startDate}&end=${endDate}`,
       }),
       providesTags: [
         { type: "Kandang", id: "LIST" },
