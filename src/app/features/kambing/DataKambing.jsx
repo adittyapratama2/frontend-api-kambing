@@ -86,13 +86,13 @@ const DataKambing = () => {
           {openDropdownId === kambing.id && ( // Check if the current kambing.id is the open dropdown
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
               <Link
-                to={`/dashboard/induk-kambing-betina/${kambing.id}`}
+                to={`/dashboard/kambing-pejantan/${kambing.id}`}
                 className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
               >
                 Lihat Detail
               </Link>
               <Link
-                to={`/dashboard/induk-kambing-betina/edit/${kambing.id}`}
+                to={`/dashboard/kambing-pejantan/edit/${kambing.id}`}
                 className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
               >
                 Ubah Data
@@ -136,13 +136,13 @@ const DataKambing = () => {
           {openDropdownId === kambing.id && ( // Check if the current kambing.id is the open dropdown
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
               <Link
-                to={`/dashboard/induk-kambing-betina/${kambing.id}`}
+                to={`/dashboard/kambing/${kambing.id}`}
                 className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
               >
                 Lihat Detail
               </Link>
               <Link
-                to={`/dashboard/induk-kambing-betina/edit/${kambing.id}`}
+                to={`/dashboard/kambing/edit/${kambing.id}`}
                 className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
               >
                 Ubah Data
