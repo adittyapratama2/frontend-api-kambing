@@ -36,6 +36,15 @@ export const laporanApiSlice = apiSlice.injectEndpoints({
         { type: "ProduksiSusu", id: "LIST" },
       ],
     }),
+    getLaporanKandangById: builder.query({
+      query: ({ id }) => ({
+        url: `/laporan-kambing/detail-kandang/${id}`,
+      }),
+      providesTags: [
+        { type: "Kandang", id: "LIST" },
+        { type: "PakanKandang", id: "LIST" },
+      ],
+    }),
   }),
 });
 
@@ -43,4 +52,5 @@ export const {
   useGetLaporanAllQuery,
   useGetLaporanBySearchKambingQuery,
   useGetLaporanKambingByIdQuery,
+  useGetLaporanKandangByIdQuery,
 } = laporanApiSlice;

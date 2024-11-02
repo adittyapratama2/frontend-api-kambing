@@ -126,12 +126,6 @@ const LaporanKambing = () => {
                         <span>
                           {item.noTag} - {item.nama_kambing} ({item.ras})
                         </span>
-                        <Link
-                          to={`/laporan/induk_betina/${item.id}`}
-                          className="text-blue-500 hover:text-blue-700 text-sm underline"
-                        >
-                          Report
-                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -151,12 +145,6 @@ const LaporanKambing = () => {
                         <span>
                           {item.noTag} - {item.nama_kambing} ({item.ras})
                         </span>
-                        <Link
-                          to={`/laporan/induk_pejantan/${item.id}`}
-                          className="text-blue-500 hover:text-blue-700 text-sm underline"
-                        >
-                          Report
-                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -262,12 +250,6 @@ const LaporanKambing = () => {
                     <span>
                       {induk.noTag} - {induk.nama_kambing}
                     </span>
-                    <Link
-                      to={`/laporan/induk-betina/${induk.id}`}
-                      className="text-blue-500 hover:text-blue-700 text-sm underline"
-                    >
-                      Report
-                    </Link>
                   </li>
                 ))}
               </ul>
@@ -287,12 +269,6 @@ const LaporanKambing = () => {
                     <span>
                       {pejantan.noTag} - {pejantan.nama_kambing}
                     </span>
-                    <Link
-                      to={`/laporan/induk-pejantan/${pejantan.id}`}
-                      className="text-blue-500 hover:text-blue-700 text-sm underline"
-                    >
-                      Report
-                    </Link>
                   </li>
                 ))}
               </ul>
@@ -313,7 +289,7 @@ const LaporanKambing = () => {
                       {kandang.nama_kandang} - {kandang.lokasi}
                     </span>
                     <Link
-                      to={`/laporan/kandang/${kandang.id}`}
+                      to={`/dashboard/laporan/kandang/${kandang.id}`}
                       className="text-blue-500 hover:text-blue-700 text-sm underline"
                     >
                       Report

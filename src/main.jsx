@@ -34,6 +34,7 @@ import ListProduksiSusu from "./app/features/produksi-susu";
 import UserIndex from "./app/features/user";
 import NewUser from "./app/features/user/newUser";
 import KambingReport from "./app/features/laporan/components/KambingReport";
+import KandangReport from "./app/features/laporan/components/KandangReport";
 
 // MainApp functional component to manage splash screen and routing
 const MainApp = () => {
@@ -106,6 +107,10 @@ const MainApp = () => {
                 <Route path="laporan-kambing">
                   <Route index element={<LaporanKambing />} />
                   <Route path="detail/:id" element={<KambingReport />} />
+                </Route>
+
+                <Route path="laporan">
+                  <Route path="kandang/:id" element={<KandangReport />} />
                 </Route>
 
                 <Route path="produksi-susu-kambing">
