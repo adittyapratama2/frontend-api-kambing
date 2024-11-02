@@ -186,7 +186,8 @@ const Kegiatan = () => {
           {filterType === "produksi_susu" && (
             <>
               <p className="text-sm text-gray-600">
-                <strong>Tanggal Perah:</strong> {item.tanggal_perah || "N/A"}
+                <strong>Tanggal Produksi:</strong>{" "}
+                {item.tanggal_produksi || "N/A"}
               </p>
               <p className="text-sm text-gray-600">
                 <strong>Volume Susu:</strong> {item.volume_susu || "N/A"} liter
@@ -195,7 +196,11 @@ const Kegiatan = () => {
                 <strong>Kualitas Susu:</strong> {item.kualitas_susu || "N/A"}
               </p>
               <p className="text-sm text-gray-600">
-                <strong>Catatan Perah:</strong> {item.catatan_perah || "N/A"}
+                <strong>Periode Laktasi:</strong>{" "}
+                {item.periode_laktasi || "N/A"}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Catatan Perah:</strong> {item.catatan || "N/A"}
               </p>
             </>
           )}

@@ -10,8 +10,8 @@ const ProduksiSusu = ({ formData, handleInputChange, jenis }) => {
               <label className="block text-textPrimary">Tanggal Catat</label>
               <input
                 type="date"
-                name="tanggal_pencatatan"
-                value={formData.tanggal_pencatatan}
+                name="tanggal_produksi"
+                value={formData.tanggal_produksi}
                 onChange={handleInputChange}
                 className="w-full border rounded-lg p-3 text-textPrimary"
               />
@@ -46,9 +46,9 @@ const ProduksiSusu = ({ formData, handleInputChange, jenis }) => {
           </div>
 
           <div>
-            <label className="block text-textPrimary">Kualitas Susu</label>
+            <label className="block text-textPrimary">Periode Laktasi</label>
             <input
-              type="text"
+              type="number"
               name="periode_laktasi"
               value={formData.periode_laktasi}
               onChange={handleInputChange}

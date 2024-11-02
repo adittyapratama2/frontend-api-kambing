@@ -3,6 +3,27 @@ import moment from "moment";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetLaporanKandangByIdQuery } from "../../../../state/query/laporan";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const KandangReport = () => {
   const { id } = useParams();
@@ -25,6 +46,83 @@ const KandangReport = () => {
   if (error) return <div>Error fetching data</div>;
 
   const pakanData = kandang.pakan || [];
+  const dates = pakanData.map((entry) => entry.date);
+  const jumlahPakanData = pakanData.map((entry) => entry.qtyPakan);
+
+  const chartData = {
+    labels: dates,
+    datasets: [
+      {
+        label: "Qty Pakan (kg)",
+        data: jumlahPakanData,
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false, // Allows the chart to adapt to container size
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          font: {
+            size: window.innerWidth > 768 ? 16 : 12, // Adjust legend font size
+          },
+          color: "#374151", // Tailwind gray-700
+        },
+      },
+      tooltip: {
+        mode: "index",
+        intersect: false,
+        bodyFont: {
+          size: window.innerWidth > 768 ? 14 : 10,
+        },
+        titleFont: {
+          size: window.innerWidth > 768 ? 16 : 12,
+        },
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Tanggal",
+          font: {
+            size: window.innerWidth > 768 ? 16 : 12,
+          },
+          color: "#374151", // Tailwind gray-700
+        },
+        ticks: {
+          font: {
+            size: window.innerWidth > 768 ? 12 : 8,
+          },
+          color: "#6B7280", // Tailwind gray-500
+          autoSkip: true,
+          maxTicksLimit: window.innerWidth > 768 ? 15 : 7,
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Jumlah Pakan (Kg)",
+          font: {
+            size: window.innerWidth > 768 ? 16 : 12,
+          },
+          color: "#374151", // Tailwind gray-700
+        },
+        ticks: {
+          font: {
+            size: window.innerWidth > 768 ? 12 : 8,
+          },
+          color: "#6B7280", // Tailwind gray-500
+        },
+      },
+    },
+  };
 
   return (
     <div className="min-h-screen bg-white p-2">
@@ -100,6 +198,16 @@ const KandangReport = () => {
               onChange={(e) => setEndDate(e.target.value)}
               className="block w-full p-3 text-xs text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
             />
+          </div>
+        </div>
+
+        {/* Growth Chart */}
+        <div className="mt-6 p-4 bg-white rounded-lg shadow-md w-full sm:w-11/12 md:w-10/12 lg:w-8/12 xl:w-6/12 mx-auto">
+          <h2 className="text-center text-lg md:text-xl font-semibold text-textSecondary mb-4">
+            Chart Jumlah Pakan Kandang
+          </h2>
+          <div className="h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
+            <Line data={chartData} options={chartOptions} />
           </div>
         </div>
 
