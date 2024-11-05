@@ -7,6 +7,7 @@ import { FaSearch } from "react-icons/fa";
 import { LuArrowUpDown, LuClover } from "react-icons/lu";
 import { IoFilterSharp } from "react-icons/io5";
 import { IoIosMore } from "react-icons/io";
+import { TbMilk } from "react-icons/tb";
 
 const ListProduksiSusu = () => {
   // Set default values to the current month
@@ -88,23 +89,26 @@ const ListProduksiSusu = () => {
               <div className="flex items-center">
                 <div className="mr-4">
                   <div className="bg-secondary rounded-full flex items-center justify-center w-10 h-10">
-                    <LuClover className="text-primary w-6 h-6" />
+                    <TbMilk className="text-primary w-6 h-6" />
                   </div>
                 </div>
 
                 {/* Kambing Info */}
                 <div>
                   <h2 className="text-lg font-semibold text-textPrimary">
-                    {susu.kawinBetina.nama_kambing} &{" "}
-                    {susu.kawinJantan.nama_kambing}
+                    #{susu.produksiSusu.noTag}
                   </h2>
                   <h3 className="text-md font-semibold text-textPrimary">
-                    {susu.kawinKambing.nama_kambing}
+                    Nama Kambing: {susu.produksiSusu.nama_kambing}
                   </h3>
+                  <p className="text-md">
+                    Tgl Produksi: {susu.tanggal_produksi}
+                  </p>
                   <p className="text-xs mt-1 p-1 bg-darkGrey rounded-full inline-block">
-                    {susu.status_perkawinan == 1
-                      ? "Berhasil"
-                      : "Status Tidak Dikenal"}
+                    Total Volume: {susu.volume_susu} ml
+                  </p>
+                  <p className="ml-2 text-xs mt-1 p-1 bg-success text-white rounded-full inline-block">
+                    Kualitas {susu.kualitas_susu}
                   </p>
                 </div>
               </div>
@@ -125,6 +129,7 @@ const ListProduksiSusu = () => {
             </p>
           </div>
         )}
+        <>&nbsp;</>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default {
       background: "#F9FAFB", // Light background color
       textPrimary: "#111827", // Dark text color
       textSecondary: "#6B7280", // Light gray text color
-      success: "#22C55E", // Success message color
+      success: "#28A745", // Success message color
       warning: "#FBBF24", // Warning color
       error: "#EF4444", // Error color
       pink: "#FFC0CB",

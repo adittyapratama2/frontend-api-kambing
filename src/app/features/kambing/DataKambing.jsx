@@ -291,6 +291,7 @@ const DataKambing = () => {
             </Link>
           </div>
         )}
+        <>&nbsp;</>
       </div>
     </div>
   );
