@@ -98,9 +98,16 @@ const DataKambingId = () => {
             <tr className="border-b">
               <td className="py-2 px-4 font-semibold">Status</td>
               <td className="py-2 px-4">
-                {data.goat.status === "hidup" ? "Hidup" : "Mati"}
+                {data.goat.status === "1"
+                  ? "Hidup"
+                  : data.goat.status === "2"
+                  ? "Mati"
+                  : data.goat.status === "3"
+                  ? "Terjual"
+                  : "Unknown"}
               </td>
             </tr>
+
             <tr>
               <td className="py-2 px-4 font-semibold">QR Code</td>
               <td className="py-2 px-4">

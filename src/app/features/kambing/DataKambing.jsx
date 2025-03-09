@@ -1,4 +1,7 @@
-import { useGetKambingQuery } from "../../../state/query/kambing";
+import {
+  useDeleteKambingMutation,
+  useGetKambingQuery,
+} from "../../../state/query/kambing";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEllipsisV, FaMars, FaSearch, FaVenus } from "react-icons/fa";
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
@@ -12,6 +15,18 @@ const DataKambing = () => {
   const navigate = useNavigate();
   const [filterType, setFilterType] = useState("kambing"); // Default filter
   const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown open state
+  const [hapusKambing] = useDeleteKambingMutation();
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Apakah yakin mau menghapus data ini?")) {
+      try {
+        await hapusKambing({ id }).unwrap();
+        console.log("Kambing deleted successfully");
+      } catch (error) {
+        console.log("Failed to delete Kambing Tahun:", error);
+      }
+    }
+  };
 
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
@@ -58,10 +73,7 @@ const DataKambing = () => {
               </Link>
               <button
                 className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
-                onClick={() => {
-                  // Handle delete action here
-                  console.log("Hapus clicked");
-                }}
+                onClick={() => handleDelete(kambing.id)}
               >
                 Hapus
               </button>
@@ -99,10 +111,7 @@ const DataKambing = () => {
               </Link>
               <button
                 className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
-                onClick={() => {
-                  // Handle delete action here
-                  console.log("Hapus clicked");
-                }}
+                onClick={() => handleDelete(kambing.id)}
               >
                 Hapus
               </button>
@@ -149,10 +158,7 @@ const DataKambing = () => {
               </Link>
               <button
                 className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
-                onClick={() => {
-                  // Handle delete action here
-                  console.log("Hapus clicked");
-                }}
+                onClick={() => handleDelete(kambing.id)}
               >
                 Hapus
               </button>

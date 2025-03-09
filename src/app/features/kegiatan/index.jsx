@@ -6,6 +6,11 @@ import { LuArrowUpDown } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useGetKegiatanQuery } from "../../../state/query/care";
+import { useDeletePertumbuhanKambingMutation } from "../../../state/query/pertumbuhan";
+import { useDeleteKesehatanKambingMutation } from "../../../state/query/kesehatan";
+import { useDeletePemerahanKambingMutation } from "../../../state/query/pemerahan";
+import { useDeleteProduksiSusuMutation } from "../../../state/query/produksiSusu";
+import { useDeletePakanKandangMutation } from "../../../state/query/pakan";
 
 const Kegiatan = () => {
   const [limit, setLimit] = useState(10);
@@ -13,6 +18,11 @@ const Kegiatan = () => {
   const offset = 0; // Fixed limit of 10
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [deletePertumbuhan] = useDeletePertumbuhanKambingMutation();
+  const [deleteKesehatan] = useDeleteKesehatanKambingMutation();
+  const [deletePemerahan] = useDeletePemerahanKambingMutation();
+  const [deleteProduksiSusu] = useDeleteProduksiSusuMutation();
+  const [deletePakanKandang] = useDeletePakanKandangMutation();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -31,6 +41,38 @@ const Kegiatan = () => {
   const [filterType, setFilterType] = useState("pertumbuhan");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleDelete = async (id) => {
+    // Tampilkan dialog konfirmasi sebelum menghapus
+    const confirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus item ini?"
+    );
+    if (!confirmed) return;
+
+    // Mapping filterType ke fungsi delete yang sesuai
+    const deleteFunctions = {
+      pakan_kandang: deletePakanKandang,
+      pertumbuhan: deletePertumbuhan,
+      kesehatan: deleteKesehatan,
+      pemerahan: deletePemerahan,
+      produksi_susu: deleteProduksiSusu,
+    };
+
+    const deleteFunction = deleteFunctions[filterType];
+
+    if (!deleteFunction) {
+      console.error("Unknown filter type");
+      return;
+    }
+
+    try {
+      await deleteFunction({ id });
+      console.log(`${filterType} deleted successfully`);
+      // Optional: Update state atau redirect setelah penghapusan
+    } catch (error) {
+      console.error("Error deleting:", error);
+    }
+  };
 
   useEffect(() => {
     if (!isLoading && isLoadingMore) {
@@ -76,7 +118,7 @@ const Kegiatan = () => {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
-                <Link
+                {/* <Link
                   to={`/dashboard/${
                     filterType === "pakan_kandang"
                       ? "pakan-kandang"
@@ -95,7 +137,7 @@ const Kegiatan = () => {
                   Lihat Detail
                 </Link>
                 <Link
-                  to={`/dashboard/${
+                  to={`/dashboard/kegiatan/${
                     filterType === "pakan_kandang"
                       ? "pakan-kandang"
                       : filterType === "pertumbuhan"
@@ -111,13 +153,10 @@ const Kegiatan = () => {
                   className="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition duration-200"
                 >
                   Edit
-                </Link>
+                </Link> */}
                 <button
                   className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100 transition duration-200"
-                  onClick={() => {
-                    // Handle delete action here
-                    console.log(`${filterType} Hapus clicked`);
-                  }}
+                  onClick={() => handleDelete(item.id)} // Perbaiki dengan arrow function
                 >
                   Hapus
                 </button>
@@ -228,7 +267,7 @@ const Kegiatan = () => {
   });
 
   return (
-    <div className="min-h-screen bg-white p-2">
+    <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-10 max-w-4xl mx-auto">
       {/* Header and Create Button */}
       <div className="sticky top-0 bg-white z-10 p-2">
         <div className="flex justify-between items-center">

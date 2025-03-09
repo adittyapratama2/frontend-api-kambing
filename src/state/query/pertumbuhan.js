@@ -12,7 +12,7 @@ export const pertumbuhanKambingApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `/pertumbuhan-kambing/${id}`,
       }),
-      providesTags: (result, error, id) => [{ type: "PertumbuhanKambing", id }],
+      providesTags: [{ type: "PertumbuhanKambing", id: "LIST" }],
     }),
     createPertumbuhanKambingBaru: builder.mutation({
       query: (data) => ({
@@ -24,22 +24,18 @@ export const pertumbuhanKambingApiSlice = apiSlice.injectEndpoints({
     }),
     updatePertumbuhanKambing: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/pertumbuhan-kambing/${id}`,
-        method: "PUT", // Use PUT for update
+        url: `/pertumbuhan-kambing/update/${id}`,
+        method: "PATCH", // Use PUT for update
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "PertumbuhanKambing", id },
-      ],
+      invalidatesTags: [{ type: "PertumbuhanKambing", id: "LIST" }],
     }),
     deletePertumbuhanKambing: builder.mutation({
       query: ({ id }) => ({
         url: `/pertumbuhan-kambing/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "PertumbuhanKambing", id },
-      ],
+      invalidatesTags: [{ type: "PertumbuhanKambing", id: "LIST" }],
     }),
   }),
 });

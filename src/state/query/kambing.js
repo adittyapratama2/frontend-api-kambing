@@ -16,7 +16,7 @@ export const kambingApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `/goats/${id}`,
       }),
-      providesTags: (result, error, id) => [{ type: "Kambing", id }],
+      providesTags: [{ type: "Kambing", id: "LIST" }],
     }),
     createKambingBaru: builder.mutation({
       query: (data) => ({
@@ -29,17 +29,17 @@ export const kambingApiSlice = apiSlice.injectEndpoints({
     updateKambing: builder.mutation({
       query: ({ id, data }) => ({
         url: `/goats/${id}`,
-        method: "PUT", // Use PUT for update
+        method: "PATCH", // Use PUT for update
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Kambing", id }],
+      invalidatesTags: [{ type: "Kambing", id: "LIST" }],
     }),
     deleteKambing: builder.mutation({
       query: ({ id }) => ({
         url: `/goats/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Kambing", id }],
+      invalidatesTags: [{ type: "Kambing", id: "LIST" }],
     }),
   }),
 });

@@ -35,6 +35,8 @@ import UserIndex from "./app/features/user";
 import NewUser from "./app/features/user/newUser";
 import KambingReport from "./app/features/laporan/components/KambingReport";
 import KandangReport from "./app/features/laporan/components/KandangReport";
+import EditKambing from "./app/features/kambing/components/EditKambing";
+import EditPertumbuhan from "./app/features/pencatatan/components/pertumbuhan/EditPertumbuhan";
 
 // MainApp functional component to manage splash screen and routing
 const MainApp = () => {
@@ -75,6 +77,7 @@ const MainApp = () => {
                   <Route index element={<DataKambing />} />
                   <Route path="buat-baru" element={<BuatKambingBaru />} />
                   <Route path=":id" element={<DataKambingId />} />
+                  <Route path="edit/:id" element={<EditKambing />} />
                   <Route path="input-data/:id" element={<InputDataKambing />} />
                 </Route>
 
@@ -129,6 +132,10 @@ const MainApp = () => {
 
                 <Route path="kegiatan">
                   <Route index element={<Kegiatan />} />
+                  <Route
+                    path="pertumbuhan-kambing/edit/:id"
+                    element={<EditPertumbuhan />}
+                  />
                 </Route>
               </Route>
               <Route

@@ -141,6 +141,7 @@ const KambingForm = ({ formData, handleInputChange, jenis }) => {
               <option value="">Pilih Status</option>
               <option value="1">Hidup</option>
               <option value="2">Mati</option>
+              <option value="3">Terjual</option>
             </select>
           </div>
         </div>
