@@ -12,7 +12,7 @@ export const pejantanApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `/induk-pejantan/${id}`,
       }),
-      providesTags: (result, error, id) => [{ type: "IndukPejantan", id }],
+      providesTags: [{ type: "IndukPejantan", id: "LIST" }],
     }),
     createPejantanBaru: builder.mutation({
       query: (data) => ({
@@ -28,18 +28,14 @@ export const pejantanApiSlice = apiSlice.injectEndpoints({
         method: "PUT", // Use PUT for update
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "IndukPejantan", id },
-      ],
+      invalidatesTags: [{ type: "IndukPejantan", id: "LIST" }],
     }),
     deletePejantan: builder.mutation({
       query: ({ id }) => ({
         url: `/induk-pejantan/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "IndukPejantan", id },
-      ],
+      invalidatesTags: [{ type: "IndukPejantan", id: "LIST" }],
     }),
   }),
 });

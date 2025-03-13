@@ -28,18 +28,14 @@ export const produksiSusuApiSlice = apiSlice.injectEndpoints({
         method: "PUT", // Use PUT for update
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "ProduksiSusu", id },
-      ],
+      invalidatesTags: [{ type: "ProduksiSusu", id: "LIST" }],
     }),
     deleteProduksiSusu: builder.mutation({
       query: ({ id }) => ({
         url: `/produksi-susu-kambing/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "ProduksiSusu", id },
-      ],
+      invalidatesTags: [{ type: "ProduksiSusu", id: "LIST" }],
     }),
   }),
 });

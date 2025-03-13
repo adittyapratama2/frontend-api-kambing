@@ -1,12 +1,13 @@
 import React from "react";
-import { useGetIndukBetinaByIdQuery } from "../../../state/query/betina";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
+import { useGetPejantanByIdQuery } from "../../../state/query/pejantan";
 
-const DataIndukan = () => {
+const Pejantan = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, error, isLoading } = useGetIndukBetinaByIdQuery({ id });
+  const { data, error, isLoading } = useGetPejantanByIdQuery({ id });
 
   if (isLoading)
     return (
@@ -36,7 +37,7 @@ const DataIndukan = () => {
             <span>Kembali</span>
           </button>
           <h1 className="text-2xl font-bold text-gray-800">
-            Data Indukan #{data.goat.noTag}
+            Data Pejantan #{data.goat.noTag}
           </h1>
         </div>
       </div>
@@ -87,7 +88,7 @@ const DataIndukan = () => {
                   label="Total Kelahiran"
                   value={
                     <span className="text-2xl font-bold text-primary">
-                      {data.goat.indukBetina.length || 0}
+                      {data.goat.indukPejantan.length || 0}
                     </span>
                   }
                 />
@@ -108,9 +109,9 @@ const DataIndukan = () => {
             <h3 className="text-xl font-bold text-gray-800 mb-4">
               Daftar Anak
             </h3>
-            {data.goat.indukBetina && data.goat.indukBetina.length > 0 ? (
+            {data.goat.indukPejantan && data.goat.indukPejantan.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {data.goat.indukBetina.map((anak, index) => (
+                {data.goat.indukPejantan.map((anak, index) => (
                   <div
                     key={anak.id}
                     className="p-4 border border-gray-100 rounded-lg hover:shadow-md transition-shadow"
@@ -161,4 +162,4 @@ const InfoItem = ({ label, value }) => (
   </div>
 );
 
-export default DataIndukan;
+export default Pejantan;

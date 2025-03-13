@@ -49,7 +49,7 @@ const Dashboard = () => {
               </h2>
               <p className="text-white/90 mt-1">{info.user.role}</p>
 
-              <div className="mt-4 flex space-x-4">
+              {/* <div className="mt-4 flex space-x-4">
                 <div className="bg-white/20 rounded-lg px-4 py-2 text-white backdrop-blur-sm">
                   <p className="text-sm">Total Kambing</p>
                   <p className="text-xl font-bold">42</p>
@@ -58,7 +58,7 @@ const Dashboard = () => {
                   <p className="text-sm">Produksi Hari Ini</p>
                   <p className="text-xl font-bold">68 L</p>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="hidden md:block">
               <img
@@ -72,7 +72,7 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap -mx-4">
           <div className="w-full md:w-1/3 px-4 mb-6">
             <div className="bg-white rounded-xl shadow-sm p-6 h-full">
@@ -118,7 +118,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Menu Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -239,7 +239,7 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <Link
+          {/* <Link
             to="/dashboard/kesehatan"
             className="transform transition hover:scale-105"
           >
@@ -253,12 +253,12 @@ const Dashboard = () => {
               </div>
               <p className="font-medium text-gray-800">Kesehatan</p>
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
       {/* Recent Activity Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <h2 className="text-xl font-bold text-gray-800 mb-4">
           Aktivitas Terbaru
         </h2>
@@ -311,7 +311,7 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

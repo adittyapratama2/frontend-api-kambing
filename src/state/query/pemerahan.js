@@ -28,18 +28,14 @@ export const pemerahanKambingApiSlice = apiSlice.injectEndpoints({
         method: "PUT", // Use PUT for update
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "PemerahanKambing", id },
-      ],
+      invalidatesTags: [{ type: "PemerahanKambing", id: "LIST" }],
     }),
     deletePemerahanKambing: builder.mutation({
       query: ({ id }) => ({
         url: `/pemerahan-kambing/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "PemerahanKambing", id },
-      ],
+      invalidatesTags: [{ type: "PemerahanKambing", id: "LIST" }],
     }),
   }),
 });

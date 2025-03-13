@@ -37,9 +37,7 @@ export const pakanKandangApiSlice = apiSlice.injectEndpoints({
         url: `/pakan-kandang/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "PakanKandang", id },
-      ],
+      invalidatesTags: [{ type: "PakanKandang", id: "LIST" }],
     }),
   }),
 });
